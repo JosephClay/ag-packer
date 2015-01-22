@@ -1,5 +1,5 @@
 # ag-packer
-Data compression for an array of objects of string, int.
+Compression for flat graphing data. Assumes that data is an array of objects with numeric values.
 
 Goals
 -----
