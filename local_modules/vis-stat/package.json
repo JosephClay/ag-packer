@@ -1,0 +1,12 @@
+{
+  "name": "vis-stat",
+  "version": "0.1.3",
+  "description": "visualize statistical numbers",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joseph Clay",
+  "license": "MIT"
+}

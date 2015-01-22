@@ -1,0 +1,9 @@
+var BYTES_PER_KB = 1024,
+    BYTES_PER_MB = Math.pow(BYTES_PER_KB, 2),
+    BYTES_PER_GB = Math.pow(BYTES_PER_KB, 3);
+
+module.exports = {
+    BYTES_PER_KB: BYTES_PER_KB,
+    BYTES_PER_MB: BYTES_PER_MB,
+    BYTES_PER_GB: BYTES_PER_GB
+};

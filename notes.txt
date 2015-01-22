@@ -1,0 +1,22 @@
+// before prioritization:
+// compressed size: 10k:  129.588 KB
+// savings: 10k:  1589.39%
+// pack time: 10k:  11.126911ms
+
+// after prioritization:
+// This would show greater gains if smaller alpha-numeric sets are used.
+// Function optimization and removal of length checking results in perf
+// gains in javascript.
+// compressed size: 10k:  125.490 KB
+// savings: 10k:  1641.38%
+// pack time: 10k:  10.000612ms
+
+// after additional tokens:
+// compressed size: 10k:  107.340 KB
+// savings: 10k:  1918.73%
+// pack time: 10k:  12.838218ms
+
+// after base 16 and 32 encoding legened
+// compressed size: 10k:  105.564 KB
+// savings: 10k:  1950.77%
+// pack time: 10k:  13.788521ms
