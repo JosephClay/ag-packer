@@ -3,10 +3,13 @@ Compression for flat graphing data. Assumes that data is an array of objects wit
 
 Scripts
 -----
-`npm run-script start`
-`npm run-script start`
-`npm run-script start`
-`npm run-script start`
+`npm run-script prime` primes the data folder with test data files.
+
+`npm run-script test` runs the unit tests.
+
+`npm run-script perf` runs the performance tests.
+
+`npm run-script start` runs the unit tests and perf tests.
 
 Goals
 -----
