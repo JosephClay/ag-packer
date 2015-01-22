@@ -18,7 +18,7 @@ var Promise      = require('bluebird'),
     bigData        = bigDataGen(),
     bigDataJson    = JSON.stringify(bigData),
 
-    sampleDataJson = fs.readFileSync('./tests/data/sample-data-raw.json').toString(),
+    sampleDataJson = fs.readFileSync('./sample-data-raw.json').toString(),
 	sampleData     = JSON.parse(sampleDataJson);
 
 var writeData = function(p, data) {
