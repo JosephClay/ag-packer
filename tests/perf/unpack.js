@@ -37,7 +37,7 @@ module.exports = {
             { name: 'small',  path: './data/small-data-packed.txt' },
             { name: 'medium', path: './data/medium-data-packed.txt' },
             // { name: 'big',    path: './data/big-data-packed.txt' },
-            // { name: 'sample', path: './data/sample-data-packed.txt' }
+            { name: 'sample', path: './data/sample-data-packed.txt' }
         ], function(config, callback) {
             runTest(
                 config.name,

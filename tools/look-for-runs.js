@@ -30,7 +30,6 @@ var lookForRun = function(cha, chaArr) {
 	return highestRun;
 };
 
-var count = 0;
 var result = _(data.slice())
 	.uniq()
 	.tap(function(arr) {
@@ -39,9 +38,10 @@ var result = _(data.slice())
 	})
 	.reduce(function(runs, cha) {
 		var run = lookForRun(cha, data);
-		if (run > 2) { runs[cha] = run; }
+		if (run > 3) { runs[cha] = run; }
 	
 		return runs;
 	}, {});
 
 console.log('result: ', result);
+// result:  {}
