@@ -31,8 +31,8 @@ module.exports = {
             { name: 'tiny',   path: './data/tiny-data.json' },
             { name: 'small',  path: './data/small-data.json' },
             { name: 'medium', path: './data/medium-data.json' },
-            { name: 'big',    path: './data/big-data.json' },
-            { name: 'sample', path: './data/sample-data-raw.json' }
+            // { name: 'big',    path: './data/big-data.json' },
+            // { name: 'sample', path: './data/sample-data-raw.json' }
         ], function(config, callback) {
 
             runTest(
