@@ -37,17 +37,17 @@ var packAndWriteData = function(p, data) {
 };
 
 Promise.all([
-	writeData('./tests/data/tiny-data.json', tinyDataJson),
-	writeData('./tests/data/small-data.json', smallDataJson),
-	writeData('./tests/data/medium-data.json', mediumDataJson),
-	writeData('./tests/data/big-data.json', bigDataJson),
-	writeData('./tests/data/sample-data.json', sampleDataJson),
+	writeData('./data/tiny-data.json', tinyDataJson),
+	writeData('./data/small-data.json', smallDataJson),
+	writeData('./data/medium-data.json', mediumDataJson),
+	writeData('./data/big-data.json', bigDataJson),
+	writeData('./data/sample-data.json', sampleDataJson),
 
-	packAndWriteData('./tests/data/tiny-data-packed.txt', tinyData),
-	packAndWriteData('./tests/data/small-data-packed.txt', smallData),
-	packAndWriteData('./tests/data/medium-data-packed.txt', mediumData),
-	packAndWriteData('./tests/data/big-data-packed.txt', bigData),
-	packAndWriteData('./tests/data/sample-data-packed.txt', sampleData)
+	packAndWriteData('./data/tiny-data-packed.txt', tinyData),
+	packAndWriteData('./data/small-data-packed.txt', smallData),
+	packAndWriteData('./data/medium-data-packed.txt', mediumData),
+	packAndWriteData('./data/big-data-packed.txt', bigData),
+	packAndWriteData('./data/sample-data-packed.txt', sampleData)
 ])
 .then(function() {
 	console.log('done');

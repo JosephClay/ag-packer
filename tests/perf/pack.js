@@ -9,9 +9,9 @@ var runTest = function(name, rawJson, callback) {
     var rawData    = JSON.parse(rawJson),
         clock      = processClock(),
         packedData = packer.pack(rawData);
-    
+
     clock.end();
-    
+
     table.push({
         name:     name,
         size:     stats.size(packedData).humanizeBytes(),
@@ -28,11 +28,11 @@ module.exports = {
         test.expect(1);
 
         async.eachSeries([
-            { name: 'tiny',   path: './tests/data/tiny-data.json' },
-            { name: 'small',  path: './tests/data/small-data.json' },
-            { name: 'medium', path: './tests/data/medium-data.json' },
-            { name: 'big',    path: './tests/data/big-data.json' },
-            { name: 'sample', path: './tests/data/sample-data-raw.json' }
+            { name: 'tiny',   path: './data/tiny-data.json' },
+            { name: 'small',  path: './data/small-data.json' },
+            { name: 'medium', path: './data/medium-data.json' },
+            { name: 'big',    path: './data/big-data.json' },
+            { name: 'sample', path: './data/sample-data-raw.json' }
         ], function(config, callback) {
 
             runTest(
