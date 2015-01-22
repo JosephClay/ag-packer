@@ -5,6 +5,8 @@ Scripts
 -----
 `npm run-script prime` primes the data folder with test data files.
 
+`npm run-script tokens` generates the valid tokens used in packing/unpacking.
+
 `npm run-script test` runs the unit tests.
 
 `npm run-script perf` runs the performance tests.
