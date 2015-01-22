@@ -15,9 +15,7 @@ Scripts
 
 Goals
 -----
-- data starts as json
-- keys must be strings
-- values must be numbers
+Data starts as json. Keys must be strings, values must be numbers. Must maintain sort order.
 - small output
 - fast
 - valid utf8

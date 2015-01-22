@@ -2,7 +2,8 @@ var _            = require('./utils'),
     DELIMITER    = require('./delimiter'),
     tokens       = require('./tokens'),
     TOKEN_TO_NUM = tokens.numMap,
-    NEW_LINE     = '\n';
+    NEW_LINE     = '\n',
+    undef;
 
 var unzipLegend = function(legend) {
     var map       = {},
@@ -16,24 +17,76 @@ var unzipLegend = function(legend) {
         cha = str[0];
         
         map[cha] = strLen === 2 ? TOKEN_TO_NUM[str[1]] : parseInt(str.substr(1, strLen), 32);
-
     }
     return map;
 };
 
-// Unzip and expand in one pass
-var unzipAndExpandCode = function(legend, code) {
-    var undef,
-        buffer    = '',
-        hasBuffer = false,
-        codeArr   = code.split(''),
-        idx       = 0,
-        length    = codeArr.length,
-        zip       = [],
+var unzipAndExpandCode = function(legend, lines, count) {
+    var lineData = {},
+        idx = 0, length = lines.length,
+        line;
+    for (; idx < length; idx++) {
+        line = lines[idx].split(' ');
+        lineData[line[0]] = unzipAndExpandLine(legend, line[1], count);
+    }
+    return lineData;
+};
+
+var processStreak = function(arr, legend, streakStr, index) {
+    var streak = streakStr.split(DELIMITER),
+        times = streak[0],
+        value = streak[1];
+
+    times = times.length === 1 ?
+        TOKEN_TO_NUM[times] :
+        parseInt(times, 32);
+
+    value = legend[value] !== undef ?
+        legend[value] : 
+        +value;
+
+    while (times--) {
+        arr[index] = value;
+        index++;
+    }
+
+    return index;
+};
+
+var unzipAndExpandLine = function(legend, line, count) {
+    var zip        = new Array(count),
+        
+        buffer     = '',
+        hasBuffer  = false,
+        
+        index      = 0,
+        idx        = 0,
+        length     = line.length,
+        
+        streak     = '',
+        isInStreak = false,
+
         cha;
 
     for (; idx < length; idx++) {
-        cha = codeArr[idx];
+        cha = line[idx];
+
+        if (!isInStreak && cha === '(') {
+            isInStreak = true;
+            continue;
+        }
+
+        if (isInStreak && cha === ')') {
+            index = processStreak(zip, legend, streak, index);
+            isInStreak = false;
+            streak = '';
+            continue;
+        }
+
+        if (isInStreak) {
+            streak += cha;
+            continue;
+        }
 
         // if we encounter a delimiter, that's
         // an indication that we should push the
@@ -41,7 +94,8 @@ var unzipAndExpandCode = function(legend, code) {
         // numbers in the pack
         if (cha === DELIMITER) {
             if (hasBuffer) {
-                zip.push(+buffer);
+                zip[index] = +buffer;
+                index++;
                 buffer = '';
                 hasBuffer = false;
             }
@@ -55,21 +109,24 @@ var unzipAndExpandCode = function(legend, code) {
             // ran into a character, make sure the
             // buffer gets priority
             if (hasBuffer) {
-                zip.push(+buffer);
+                zip[index] = +buffer;
+                index++;
                 buffer = '';
                 hasBuffer = false;
             }
 
-            zip.push(
-                legend[cha] === undef ? +cha : legend[cha]
-            );
+            zip[index] = legend[cha] === undef ? +cha : legend[cha];
+            index++;
         }
     }
+
+    // shouldn't need to check for a streak here
+    // as every streak should have an end
 
     // there may be items in the buffer
     // after looping, clean up the buffer
     if (hasBuffer) {
-        zip.push(+buffer);
+        zip[index] = +buffer;
     }
 
     return zip;
@@ -94,6 +151,7 @@ var unzipAndExpandCode = function(legend, code) {
 // };
 // 
 // below is what I've ended up with so far:
+/*
 var chunk = function(arr, size) {
     var idx = 0, length = arr.length / size,
         arrays = new Array(length),
@@ -104,46 +162,42 @@ var chunk = function(arr, size) {
     }
     return arrays;
 };
+*/
 
-var formatCode = function(chunks, keyset) {
-    var idx = 0, length = chunks.length;
+var formatCode = function(lineData, count) {
+    var data = new Array(count),
+        idx = 0, length = count;
     for (; idx < length; idx++) {
 
-        var chunk = chunks[idx],
-            i = 0, len = chunk.length,
-            map = {};
-        for (; i < len; i++) {
-            map[keyset[i]] = chunk[i];
+        var obj = {};
+        for (var key in lineData) {
+            obj[key] = lineData[key][idx];
         }
+        data[idx] = obj;
 
-        chunks[idx] = map;
     }
-    return chunks;
+    return data;
+};
+
+var counter = function(count) {
+    return count.length === 1 ? TOKEN_TO_NUM[count] : parseInt(count, 32);
 };
 
 var unpack = function(str) {
-    var lines  = str.split(NEW_LINE),
-
-        keysetLine = lines[0],
-        keyset     = keysetLine.split(' '),
-
-        legendLine = lines[1];
-        legend     = unzipLegend(legendLine),
-
-        codeLine     = lines[2],
-        unzippedCode = unzipAndExpandCode(legend, codeLine),
-        chunkedCode  = chunk(unzippedCode, keyset.length);
-
-
-    return formatCode(chunkedCode, keyset);
+    var lines        = str.split(NEW_LINE),
+        count        = counter(lines.shift()),
+        legend       = unzipLegend(lines.shift()),
+        unzippedCode = unzipAndExpandCode(legend, lines, count);
+    return formatCode(unzippedCode, count);
 };
 
 module.exports = {
     /* debug: start */
     unzipLegend:        unzipLegend,
     unzipAndExpandCode: unzipAndExpandCode,
-    chunk:              chunk,
+    unzipAndExpandLine: unzipAndExpandLine,
     formatCode:         formatCode,
+    counter:            counter,
     /* debug: end */
 
     unpack:            unpack

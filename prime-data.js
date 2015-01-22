@@ -40,13 +40,13 @@ Promise.all([
 	writeData('./data/tiny-data.json', tinyDataJson),
 	writeData('./data/small-data.json', smallDataJson),
 	writeData('./data/medium-data.json', mediumDataJson),
-	writeData('./data/big-data.json', bigDataJson),
+	// writeData('./data/big-data.json', bigDataJson),
 	writeData('./data/sample-data.json', sampleDataJson),
 
 	packAndWriteData('./data/tiny-data-packed.txt', tinyData),
 	packAndWriteData('./data/small-data-packed.txt', smallData),
 	packAndWriteData('./data/medium-data-packed.txt', mediumData),
-	packAndWriteData('./data/big-data-packed.txt', bigData),
+	// packAndWriteData('./data/big-data-packed.txt', bigData),
 	packAndWriteData('./data/sample-data-packed.txt', sampleData)
 ])
 .then(function() {

@@ -11,8 +11,8 @@ var runTest = function(name, packedData, callback) {
     clock.end();
 
     table.push({
-        type:    name,
-        time:    clock.humanize()
+        type: name,
+        time: clock.humanize()
     });
 
     callback();
