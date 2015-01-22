@@ -29,11 +29,17 @@ node_modules
 
 big-data-packed.txt
 big-data.json
+
 medium-data-packed.txt
 medium-data.json
+
 small-data-packed.txt
 small-data.json
+
 tiny-data-packed.txt
 tiny-data.json
+
 sample-data-packed.txt
 sample-data.json
+
+tokens.txt
