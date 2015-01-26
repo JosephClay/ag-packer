@@ -65,7 +65,7 @@ var ITERATIONS = 65536,
 		105  // numpad 9
 	];
 
-var isBlacklistedIndex = function(index) {
+var isBlacklistedIndex = function(blacklist, index) {
 	if (!blacklist.length) { return false; }
 
 	var idx = blacklist.indexOf(index);
@@ -76,9 +76,10 @@ var isBlacklistedIndex = function(index) {
 };
 
 var chars = function() {
-	var startChecking = blacklist.reduce(function(base, num) {
-		return Math.max(base, num);
-	}, 0);
+	var bl = blacklist.slice();
+		startChecking = blacklist.reduce(function(base, num) {
+			return Math.max(base, num);
+		}, 0);
 
 	var arr = new Array(ITERATIONS - blacklist.length),
 		count = 0,
@@ -86,7 +87,7 @@ var chars = function() {
 	while (idx--) {
 		// this speeds things up significantly
 		if (idx <= startChecking) {
-			if (isBlacklistedIndex(idx)) { continue; }
+			if (isBlacklistedIndex(bl, idx)) { continue; }
 		}
 		arr[count] = String.fromCharCode(idx);
 		count++;
