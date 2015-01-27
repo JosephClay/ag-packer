@@ -19,7 +19,10 @@ var Promise      = require('bluebird'),
     bigDataJson    = JSON.stringify(bigData),
 
     sampleDataJson = fs.readFileSync('./data/sample-data-raw.json').toString(),
-	sampleData     = JSON.parse(sampleDataJson);
+	sampleData     = JSON.parse(sampleDataJson),
+
+    sampleData2Json = fs.readFileSync('./data/sample-data-raw-2.json').toString(),
+	sampleData2     = JSON.parse(sampleData2Json);
 
 var writeData = function(p, data) {
 	return new Promise(function(resolve, reject) {
@@ -42,12 +45,14 @@ Promise.all([
 	writeData('./data/medium-data.json', mediumDataJson),
 	// writeData('./data/big-data.json', bigDataJson),
 	writeData('./data/sample-data.json', sampleDataJson),
+	writeData('./data/sample-data-2.json', sampleData2Json),
 
 	packAndWriteData('./data/tiny-data-packed.txt', tinyData),
 	packAndWriteData('./data/small-data-packed.txt', smallData),
 	packAndWriteData('./data/medium-data-packed.txt', mediumData),
 	// packAndWriteData('./data/big-data-packed.txt', bigData),
-	packAndWriteData('./data/sample-data-packed.txt', sampleData)
+	packAndWriteData('./data/sample-data-packed.txt', sampleData),
+	packAndWriteData('./data/sample-data-2-packed.txt', sampleData2)
 ])
 .then(function() {
 	console.log('done');
