@@ -2,7 +2,7 @@ var _        = require('lodash'),
     packer   = require('../../src/pack'),
     unpacker = require('../../src/unpack'),
 	jsonData = require('../medium-data')(),
-	data     = packer.pack(jsonData);
+    data     = packer.pack(jsonData);
 
 module.exports = {
     lines: function(test) {

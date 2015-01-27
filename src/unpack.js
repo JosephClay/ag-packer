@@ -72,6 +72,12 @@ var unzipAndExpandLine = function(legend, line, count) {
         cha = line[idx];
 
         if (!isInStreak && cha === '(') {
+            if (hasBuffer) {
+                zip[index] = +buffer;
+                index++;
+                buffer = '';
+                hasBuffer = false;
+            }
             isInStreak = true;
             continue;
         }
