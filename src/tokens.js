@@ -1,5 +1,3 @@
-// takes roughly 44ms to generate this data
-
 var ITERATIONS = 65536,
 
 	flatten = function(array) {
@@ -53,65 +51,49 @@ var ITERATIONS = 65536,
 
 		// tab, empty string, \r, \n
 		range(9, 13)		
-	]);
+	])
+	// sort highest to lowest as that's the order
+	// we're looping though indicies
+	.sort(function(a, b){ return b - a; }),
+
+	MAX_BLACKLISTED_INDEX = blacklist.reduce(function(base, num) {
+		return Math.max(base, num);
+	}, 0);
 
 var isBlacklistedIndex = function(blacklist, index) {
-	if (!blacklist.length) { return false; }
+	if (blacklist[0] !== index) { return false; }
 
-	var idx = blacklist.indexOf(index);
-	if (idx === -1) { return false; }
+	blacklist.shift();
 
-	blacklist.splice(idx, 1);
 	return true;
 };
 
 var chars = function() {
-	var bl = blacklist.slice();
-		startChecking = blacklist.reduce(function(base, num) {
-			return Math.max(base, num);
-		}, 0);
-
-	var arr = new Array(ITERATIONS - blacklist.length),
+	
+	var bl    = blacklist.slice(),
+		map   = {},
+		idx   = ITERATIONS,
 		count = 0,
-		idx = ITERATIONS;
+		str;
+
 	while (idx--) {
 		// this speeds things up significantly
-		if (idx <= startChecking) {
-			if (isBlacklistedIndex(bl, idx)) { continue; }
+		if (idx <= MAX_BLACKLISTED_INDEX && isBlacklistedIndex(bl, idx)) {
+			continue;
 		}
-		arr[count] = String.fromCharCode(idx);
+		
+		str = String.fromCharCode(idx);
+		
+		map[count] = str;
+		map[str] = count;
+
 		count++;
 	}
-	return arr;
+
+	map.size = count;
+
+	return map;
 };
 
-// this is faster as a separate method
-// rather than being included in the chars
-// generation above
-var mapTokens = function(tokens) {
-	var map = {},
-		inverse = {},
-		idx = 0, length = tokens.length;
-	for (; idx < length; idx++) {
-		map[tokens[idx]] = idx;
-		inverse[idx] = tokens[idx];
-	}
-	return {
-		map: map,
-		inverse: inverse
-	};
-};
-
-var tokens = chars(),
-	result = mapTokens(tokens);
-
-module.exports = {
-	/* debug: start */
-	generate: chars,
-	/* debug: end */
-
-	tokens:   tokens,
-	numMap:   result.map,
-	valueMap: result.inverse,
-	maxValue: tokens.length
-};
+var tokens = module.exports = chars();
+tokens.generate = chars;

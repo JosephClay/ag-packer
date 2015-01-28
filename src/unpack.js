@@ -1,7 +1,7 @@
 var _            = require('./utils'),
-    DELIMITER    = require('./delimiter'),
     tokens       = require('./tokens'),
-    TOKEN_TO_NUM = tokens.numMap,
+    DELIMITER    = require('./delimiter'),
+    TOKEN_TO_NUM = tokens,
     NEW_LINE     = '\n',
     undef;
 

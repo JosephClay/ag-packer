@@ -1,10 +1,9 @@
 var _             = require('./utils'),
     tokens        = require('./tokens'),
-    TOKENS        = tokens.tokens,
-    TOKENS_LENGTH = TOKENS.length,
-    NUM_TO_TOKEN  = tokens.valueMap,
-    MAX_VALUE     = tokens.maxValue,
     DELIMITER     = require('./delimiter'),
+
+    NUM_TO_TOKEN  = tokens,
+    MAX_TOKEN     = tokens.size,
     
     // streak = (n_z), which makes a 4 character
     // minimum to put a streak in place. dont allow
@@ -12,7 +11,7 @@ var _             = require('./utils'),
     // a loss in savings
     MIN_STREAK_COUNT = 5,
 
-    NEW_LINE      = '\n';
+    NEW_LINE         = '\n';
 
 var generateCountMap = function(data, count) {
     var idx = 0,
@@ -71,14 +70,14 @@ var prioritizeTokens = function(map) {
         return +str;
     });
 
-    return numArr.length > TOKENS_LENGTH ? numArr.slice(0, TOKENS_LENGTH) : numArr;
+    return numArr.length > MAX_TOKEN ? numArr.slice(0, MAX_TOKEN) : numArr;
 };
 
 var generateTokenMap = function(tokens) {
     var map = {},
         idx = 0, length = tokens.length;
     for (; idx < length; idx++) {
-        map[tokens[idx]] = [tokens[idx], TOKENS[idx]];
+        map[tokens[idx]] = [tokens[idx], NUM_TO_TOKEN[idx]];
     }
     return map;
 };
@@ -95,7 +94,7 @@ var generateLegend = function(tokenMap) {
         token = tokenMap[key];
         num = token[0];
 
-        if (num < MAX_VALUE) {
+        if (num < MAX_TOKEN) {
             num = NUM_TO_TOKEN[num];
         } else {
             num = num.toString(32);
@@ -274,7 +273,7 @@ var pack = function(data) {
         lineData        = populateLineMap(data, lineMap, count),
         codeLines       = zipLines(tokenMap, lineData, count),
 
-        minCount        = count < MAX_VALUE ? NUM_TO_TOKEN[count] : count.toString(32);
+        minCount        = count < MAX_TOKEN ? NUM_TO_TOKEN[count] : count.toString(32);
 
     return minCount + NEW_LINE + legend + NEW_LINE + codeLines.join(NEW_LINE);
 };
