@@ -24,8 +24,10 @@
     "start": "cls && npm install && gulp test && gulp perf",
     "test": "npm install && gulp test",
     "perf": "npm install && gulp perf",
-    "prime": "npm install && node prime-data.js",
-    "tokens": "npm install && node export-tokens.js"
+    "prime": "npm install && node tools/prime-data.js",
+    "tokens": "npm install && node tools/export-tokens.js",
+    "base32": "npm install && node tools/zero-to-max-base32.js",
+    "uniq": "npm install && node tools/uniqueness.js"
   },
   "repository": {
     "type": "git",
