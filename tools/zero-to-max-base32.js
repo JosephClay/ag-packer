@@ -1,4 +1,5 @@
 var fs     = require('fs'),
+    path   = require('path'),
 
     MAX_INT  = 2147483647,
     MAX      = 2000000,
@@ -44,5 +45,5 @@ var generate = function() {
 };
 
 console.log('saving...');
-fs.writeFileSync('./data/zero-to-max-base32.txt', generate().join('\n'));
+fs.writeFileSync(path.resolve(__dirname, '../data/zero-to-max-base32.txt'), generate().join('\n'));
 console.log('done...');

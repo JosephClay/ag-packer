@@ -1,4 +1,9 @@
-var ITERATIONS = 65536;
+var _      = require('lodash'),
+	path   = require('path'),
+	fs     = require('fs'),
+	tokens = require('../src/tokens'),
+
+	ITERATIONS = 65536;
 
 var chars = function() {
 	var obj = {},
@@ -28,14 +33,10 @@ var uniq = function(obj) {
 	return obj;
 };
 
-var _      = require('lodash'),
-	fs     = require('fs'),
-	tokens = require('../src/tokens');
-
-fs.writeFileSync('./temp/tokens.txt', JSON.stringify(chars()));
+fs.writeFileSync(path.resolve(__dirname, '../temp/tokens.txt'), JSON.stringify(chars()));
 
 var tokenFile      = fs.readFileSync('./temp/tokens.txt').toString(),
 	fileChars      = JSON.parse(tokenFile),
 	unqueFileChars = uniq(JSON.parse(tokenFile));
 
-fs.writeFileSync('./temp/unqiue.txt', JSON.stringify(nonUnique));
+fs.writeFileSync(path.resolve(__dirname, '../data/uniq.txt'), JSON.stringify(nonUnique));
