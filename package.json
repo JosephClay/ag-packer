@@ -1,6 +1,6 @@
 {
   "name": "ag-packer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Data compression for an array of objects of string, int.",
   "main": "index.js",
   "directories": {
