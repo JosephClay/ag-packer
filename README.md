@@ -13,6 +13,10 @@ Scripts
 
 `npm run-script start` runs the unit tests and perf tests.
 
+`npm run-script uniq` generates a file with invalid utf8 character codes. This will take a while.
+
+`npm run-script base32` generates a file with base32 encoded numbers from 0 to 2M.
+
 Goals
 -----
 Data starts as json. Keys must be strings, values must be numbers. Must maintain sort order.
